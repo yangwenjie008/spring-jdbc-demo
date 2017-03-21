@@ -1,5 +1,7 @@
 package com.example;
 
+import com.example.domain.BatchJobExecution;
+import com.example.domain.BatchJobExecutionId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -27,7 +29,8 @@ public class JdbcCorporateEventDao {
 
 
 
-    public  final String select_sql = "select * from batch_job_execution where job_execution_id = :id";
+    public  final String select_sql = "select  JOB_EXECUTION_ID,VERSION,JOB_INSTANCE_ID,CREATE_TIME from batch_job_execution where job_execution_id = :id";
+
 
     public List getList(String id){
 
@@ -45,6 +48,19 @@ public class JdbcCorporateEventDao {
         });
         return list;
     }
+
+    public List<BatchJobExecution> getListViaObject(BatchJobExecutionId jobExecution){
+
+//        SqlParameterSource nameParameters = new BeanPropertySqlParameterSource(jobExecution);
+//        List list = namedParameterJdbcTemplate.queryForList(select_sql, nameParameters,List.class);
+        Map<String,String> map = new HashMap<String, String>();
+        map.put("id",jobExecution.getId().toString());
+        List list = namedParameterJdbcTemplate.queryForList(select_sql,map);
+
+        return list;
+    }
+
+
 
 
     @Autowired

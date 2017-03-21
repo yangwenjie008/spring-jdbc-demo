@@ -1,7 +1,9 @@
 import com.example.JdbcCorporateEventDao;
+import com.example.domain.BatchJobExecutionId;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.math.BigInteger;
 import java.util.List;
 
 /**
@@ -10,7 +12,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application.xml");
-        JdbcCorporateEventDao dao = (JdbcCorporateEventDao) applicationContext.getBean("corporateEventDao");
+        JdbcCorporateEventDao dao = (JdbcCorporateEventDao) applicationContext.getBean("jdbcCorporateEventDao");
         List list = dao.getList("1");
         for (Object obj:list){
             if(obj instanceof List){
@@ -19,5 +21,17 @@ public class Main {
                 }
             }
         }
+
+        BatchJobExecutionId jobExecution = new BatchJobExecutionId();
+        jobExecution.setId(BigInteger.valueOf(1));
+        list = dao.getListViaObject(jobExecution);
+
+        for(Object o : list) {
+                System.out.println(o);
+        }
+
     }
+
+
+
 }

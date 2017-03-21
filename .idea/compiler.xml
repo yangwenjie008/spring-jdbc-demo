@@ -25,7 +25,7 @@
         <module name="spring-jdbc-demo" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.7">
+    <bytecodeTargetLevel>
       <module name="spring-jdbc-demo" target="1.5" />
     </bytecodeTargetLevel>
   </component>
